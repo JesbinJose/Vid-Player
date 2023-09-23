@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:play_video/utils/styles/styles.dart';
 import 'package:play_video/utils/work_during_splash.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -21,28 +20,21 @@ class SplashScreen extends StatelessWidget {
       child:  Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 50,
-                height: 50,
-                child: CircularProgressIndicator(
-                  strokeWidth: 10,
-                  color: MyColors.iconsColor,
-                  backgroundColor: MyColors.backgroundColor,
-                ),
-              ),
-            ],
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width-50,
+            child: const Text(
+              'This process may take some time please wait',
+              style: TextStyle(fontSize: 15),
+            ),
           ),
           const SizedBox(
             height: 15,
           ),
-           SizedBox(
-            width: 270,
-            child: Text(
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width-50,
+            child:const  Text(
               'Fetching all video files from Storage',
-              style: MyTextStyles.textStyle4,
+              style: TextStyle(fontSize: 15),
             ),
           ),
           const SizedBox(

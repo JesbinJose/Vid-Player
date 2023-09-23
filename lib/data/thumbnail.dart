@@ -5,7 +5,7 @@ import 'package:video_compressor/video_compressor.dart';
 class MyThumbnail {
   static final Directory _thumbnailFolder = Directory(
     //this is the directory where the thumbnails are created
-    '/storage/emulated/0/Android/data/com.example.vid_play/files/video_compress',
+    '/storage/emulated/0/Android/data/in.jesbin.vid_play/files/video_compress',
   );
 
   static Future<String> myThumbnailAllFunction(String path) async {
