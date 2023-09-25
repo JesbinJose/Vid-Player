@@ -109,6 +109,7 @@ class CustomVideoPlayerControlBar extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => PlayVideoScreen(
+                              isFullScren: true,
                               path: MyFile.videoPaths[MyFile.index - 1],
                               videoPaths: MyFile.videoPaths,
                             ),
@@ -137,6 +138,7 @@ class CustomVideoPlayerControlBar extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => PlayVideoScreen(
+                              isFullScren: true,
                               path: MyFile.videoPaths[MyFile.index + 1],
                               videoPaths: MyFile.videoPaths,
                             ),

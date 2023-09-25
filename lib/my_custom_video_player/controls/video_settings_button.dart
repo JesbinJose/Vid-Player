@@ -14,10 +14,32 @@ class VideoSettingsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _openVideoSettingsDialog(context),
-      child:
-          customVideoPlayerController.customVideoPlayerSettings.settingsButton,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: const BoxDecoration(
+              color: Color.fromRGBO(0, 0, 0, 0.5),
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
+              ),
+            ),
+            child: const Icon(
+              Icons.close,
+              color: Colors.white,
+              size: 18,
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () => _openVideoSettingsDialog(context),
+          child: customVideoPlayerController
+              .customVideoPlayerSettings.settingsButton,
+        ),
+      ],
     );
   }
 

@@ -29,6 +29,7 @@ class SingleVideoRecent extends StatelessWidget {
           MaterialPageRoute(
             //on tap calling the screen where video is played
             builder: (context) => PlayVideoScreen(
+              isFullScren: true,
               path: videoPaths[index],
               //it is just for the video navigations
               videoPaths: videoPaths,
@@ -52,12 +53,12 @@ class SingleVideoRecent extends StatelessWidget {
                 borderRadius:
                     BorderRadius.circular(15), //to make the corner rounded
                 clipBehavior: Clip.antiAlias,
-                child: Image.file(
+                child:snapshot.data!=null? Image.file(
                   File(snapshot.data!),
                   width: 60, //setting the dimenssion to set a proper size
                   height: 100,
                   fit: BoxFit.cover,
-                ),
+                ):const SizedBox(),
               );
             } else {
               //if it is loading or has some error then showing user a plain space

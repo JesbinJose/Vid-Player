@@ -19,7 +19,7 @@ class ShowThumbnail extends StatelessWidget {
   Widget build(BuildContext context) {
     Future<double> getIsPlayedValue() async =>
         await HistoryDataBaseHive.getTime(path) /
-         VideoMetadataHive.getTime(path);
+        VideoMetadataHive.getTime(path);
     return FutureBuilder(
       future: MyThumbnail.myThumbnailAllFunction(
         path,
@@ -31,12 +31,14 @@ class ShowThumbnail extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             child: Stack(
               children: [
-                Image.file(
-                  File(snapshot.data!),
-                  width: 150,
-                  height: 100,
-                  fit: BoxFit.cover,
-                ),
+                snapshot.data != null
+                    ? Image.file(
+                        File(snapshot.data!),
+                        width: 150,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      )
+                    : const SizedBox(),
                 if (isHistory)
                   Align(
                     alignment: Alignment.bottomCenter,

@@ -36,6 +36,7 @@ class VideoSingleWidget extends StatelessWidget {
         MaterialPageRoute(
           // screen for playing the video
           builder: (ctx) => PlayVideoScreen(
+            isFullScren: true,
             path: videoPath,
             videoPaths: videoPaths,
           ),

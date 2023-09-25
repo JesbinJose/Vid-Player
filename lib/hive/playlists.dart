@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:hive/hive.dart';
 
 class PlayListDB {
@@ -42,13 +44,15 @@ class PlayListDB {
       List<dynamic> myList = box.get(playlistName);
       playlists[playlistName] = [];
       for (final path in myList) {
-        playlists[playlistName]?.add(path.toString());
+        if (File(path).existsSync()) {
+          playlists[playlistName]?.add(path.toString());
+        }
       }
     }
     return playlists;
   }
 
-  static Future<void>deleteAVideoFromAllDataBase(String path) async {
+  static Future<void> deleteAVideoFromAllDataBase(String path) async {
     for (String playlistName in box.keys) {
       List list = box.get(playlistName);
       list.remove(path);

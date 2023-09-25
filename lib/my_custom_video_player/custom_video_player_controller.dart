@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:play_video/my_custom_video_player/fullscreen_video_player.dart';
 import 'package:play_video/my_custom_video_player/models/custom_video_player_settings.dart';
 import 'package:play_video/my_custom_video_player/models/my_file.dart';
 import 'package:video_player/video_player.dart';
@@ -72,23 +71,11 @@ class CustomVideoPlayerController {
   final ValueNotifier<bool> _isPlayingNotifier = ValueNotifier(false);
 
   Future<void> _enterFullscreen() async {
-    final TransitionRoute<void> route = PageRouteBuilder<void>(
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return AnimatedBuilder(
-          animation: animation,
-          builder: (BuildContext context, Widget? child) {
-            return FullscreenVideoPlayer(
-              customVideoPlayerController: this,
-            );
-          },
-        );
-      },
-    );
     _isFullscreen = true;
     _setOrientationForVideo();
     SystemChrome.setEnabledSystemUIMode(
         customVideoPlayerSettings.systemUIModeInsideFullscreen);
-    await Navigator.of(context).push(route);
+    MyFile.instance?.refresh();
   }
 
   Future<void> _exitFullscreen() async {
@@ -100,7 +87,7 @@ class CustomVideoPlayerController {
     await SystemChrome.setPreferredOrientations(customVideoPlayerSettings
         .deviceOrientationsAfterFullscreen); // reset device orientation values
     _isFullscreen = false;
-    Navigator.of(context).pop();
+    MyFile.instance?.refresh();
   }
 
   void _setOrientationForVideo() {

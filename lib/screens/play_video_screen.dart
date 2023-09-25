@@ -3,9 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:play_video/hive/history.dart';
 import 'package:play_video/hive/mostly_played.dart';
-import 'package:play_video/my_custom_video_player/custom_video_player.dart';
+import 'package:play_video/my_custom_video_player/controls/all_controls_overlay.dart';
 import 'package:play_video/my_custom_video_player/custom_video_player_controller.dart';
-import 'package:play_video/my_custom_video_player/models/custom_video_player_settings.dart';
 import 'package:play_video/my_custom_video_player/models/my_file.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
@@ -16,10 +15,12 @@ class PlayVideoScreen extends StatefulWidget {
     required this.path,
     required this.videoPaths,
     this.isPrivateSpace = false,
+    required this.isFullScren,
   });
   final String path;
   final List<String> videoPaths;
   final bool isPrivateSpace;
+  final bool isFullScren;
 
   @override
   State<PlayVideoScreen> createState() => PlayVideoScreenState();
@@ -28,9 +29,11 @@ class PlayVideoScreen extends StatefulWidget {
 class PlayVideoScreenState extends State<PlayVideoScreen> {
   late VideoPlayerController videoPlayerController;
   late CustomVideoPlayerController _customVideoPlayerController;
+  bool? isFullScreen;
 
   @override
   void initState() {
+    isFullScreen = widget.isFullScren;
     MyFile.instance = this;
     super.initState();
     videoPlayerController = VideoPlayerController.file(File(widget.path))
@@ -45,11 +48,6 @@ class PlayVideoScreenState extends State<PlayVideoScreen> {
       index: widget.videoPaths.indexOf(widget.path),
       context: context,
       videoPlayerController: videoPlayerController,
-      customVideoPlayerSettings: const CustomVideoPlayerSettings(
-        settingsButton: Icon(
-          Icons.more_vert,
-        ),
-      ),
     );
   }
 
@@ -75,11 +73,39 @@ class PlayVideoScreenState extends State<PlayVideoScreen> {
     return Scaffold(
       //making transparent for filling the remaining space
       backgroundColor: Colors.transparent,
-      body: Center(
-        child: CustomVideoPlayer(
-          customVideoPlayerController: _customVideoPlayerController,
-        ),
+      body: Stack(
+        children: [
+          Center(
+            child:InteractiveViewer(
+              clipBehavior: Clip.none,
+              minScale: 1,
+              maxScale: 5,
+              child: AspectRatio(
+                aspectRatio: isFullScreen ?? false
+                    ? _customVideoPlayerController
+                        .videoPlayerController.value.aspectRatio
+                    : _customVideoPlayerController
+                            .customVideoPlayerSettings.customAspectRatio ??
+                        _customVideoPlayerController
+                            .videoPlayerController.value.aspectRatio,
+                child: VideoPlayer(
+                  videoPlayerController,
+                ),
+              ),
+            ),
+          ),
+          AllControlsOverlay(
+            customVideoPlayerController: _customVideoPlayerController,
+            updateVideoState: _updateVideoState,
+          ),
+        ],
       ),
     );
+  }
+
+  void _updateVideoState() {
+    if (mounted) {
+      setState(() {});
+    }
   }
 }

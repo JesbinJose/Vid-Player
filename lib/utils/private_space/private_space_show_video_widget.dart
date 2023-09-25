@@ -5,7 +5,8 @@ import 'package:play_video/utils/styles/my_text_style.dart';
 import 'package:play_video/widgets/show_video_widgets/main/main_video_thumbnail.dart';
 
 class PrivateSpaceShowThumbnail extends StatefulWidget {
-  const PrivateSpaceShowThumbnail({super.key, required this.hiddenPaths, required this.instance});
+  const PrivateSpaceShowThumbnail(
+      {super.key, required this.hiddenPaths, required this.instance});
   final List<String> hiddenPaths;
   final PrivateSpaceShowVideoScreenState instance;
   @override
@@ -25,6 +26,7 @@ class _PrivateSpaceShowThumbnailState extends State<PrivateSpaceShowThumbnail> {
             context,
             MaterialPageRoute(
               builder: (context) => PlayVideoScreen(
+                isFullScren: true,
                 isPrivateSpace: true,
                 path: widget.hiddenPaths[index],
                 videoPaths: widget.hiddenPaths,

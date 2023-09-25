@@ -8,7 +8,7 @@ class MyThumbnail {
     '/storage/emulated/0/Android/data/in.jesbin.vid_play/files/video_compress',
   );
 
-  static Future<String> myThumbnailAllFunction(String path) async {
+  static Future<String?> myThumbnailAllFunction(String path) async {
     bool isAlreadyPresent = false;
     //getting the name of the file or video and remove mp4 to jpg
     final String name = '${path.split('/').last.split('.').first}.jpg';
@@ -22,8 +22,11 @@ class MyThumbnail {
       //if the thumbnail isn't present then
       await _generateThumbnail(path);
     }
-    //returning the path of the thumbnail
-    return '${_thumbnailFolder.path}/$name';
+    if (File('${_thumbnailFolder.path}/$name').existsSync()) {
+      //returning the path of the thumbnail
+      return '${_thumbnailFolder.path}/$name';
+    }
+    return null;
   }
 
   static bool _isThumbnailPresent(String name) {

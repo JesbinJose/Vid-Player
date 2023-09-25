@@ -60,6 +60,7 @@ class SearchListTile extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (context) => PlayVideoScreen(
+            isFullScren: true,
             path: path,
             videoPaths: videoPaths,
           ),
